@@ -17,6 +17,11 @@
 		972B5F171E36E7F4007336DE /* bryan2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 972B5F161E36E7F4007336DE /* bryan2.jpg */; };
 		972B5F191E36EB53007336DE /* erin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 972B5F181E36EB53007336DE /* erin.jpg */; };
 		972B5F1B1E37002B007336DE /* overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 972B5F1A1E37002B007336DE /* overlay.png */; };
+		97876D741E37A7C50089906B /* alan.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 97876D6F1E37A7C50089906B /* alan.jpg */; };
+		97876D751E37A7C50089906B /* anna.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 97876D701E37A7C50089906B /* anna.jpg */; };
+		97876D761E37A7C50089906B /* dan.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 97876D711E37A7C50089906B /* dan.jpg */; };
+		97876D771E37A7C50089906B /* michael.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 97876D721E37A7C50089906B /* michael.jpg */; };
+		97876D781E37A7C50089906B /* shaun.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 97876D731E37A7C50089906B /* shaun.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +39,11 @@
 		972B5F161E36E7F4007336DE /* bryan2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bryan2.jpg; sourceTree = "<group>"; };
 		972B5F181E36EB53007336DE /* erin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = erin.jpg; sourceTree = "<group>"; };
 		972B5F1A1E37002B007336DE /* overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = overlay.png; sourceTree = "<group>"; };
+		97876D6F1E37A7C50089906B /* alan.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = alan.jpg; sourceTree = "<group>"; };
+		97876D701E37A7C50089906B /* anna.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = anna.jpg; sourceTree = "<group>"; };
+		97876D711E37A7C50089906B /* dan.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dan.jpg; sourceTree = "<group>"; };
+		97876D721E37A7C50089906B /* michael.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = michael.jpg; sourceTree = "<group>"; };
+		97876D731E37A7C50089906B /* shaun.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = shaun.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,10 +76,8 @@
 		972B5EFC1E36E194007336DE /* faceoverlay */ = {
 			isa = PBXGroup;
 			children = (
+				97876D791E37A7CE0089906B /* photos */,
 				972B5F1A1E37002B007336DE /* overlay.png */,
-				972B5F181E36EB53007336DE /* erin.jpg */,
-				972B5F161E36E7F4007336DE /* bryan2.jpg */,
-				972B5F141E36E465007336DE /* bryan.jpg */,
 				972B5F001E36E194007336DE /* AppDelegate.h */,
 				972B5F011E36E194007336DE /* AppDelegate.m */,
 				972B5F031E36E194007336DE /* ViewController.h */,
@@ -89,6 +97,21 @@
 				972B5EFE1E36E194007336DE /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		97876D791E37A7CE0089906B /* photos */ = {
+			isa = PBXGroup;
+			children = (
+				97876D6F1E37A7C50089906B /* alan.jpg */,
+				97876D701E37A7C50089906B /* anna.jpg */,
+				97876D711E37A7C50089906B /* dan.jpg */,
+				97876D721E37A7C50089906B /* michael.jpg */,
+				97876D731E37A7C50089906B /* shaun.jpg */,
+				972B5F181E36EB53007336DE /* erin.jpg */,
+				972B5F161E36E7F4007336DE /* bryan2.jpg */,
+				972B5F141E36E465007336DE /* bryan.jpg */,
+			);
+			name = photos;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -122,6 +145,7 @@
 				TargetAttributes = {
 					972B5EF91E36E194007336DE = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 6PVXFSTZSP;
 					};
 				};
 			};
@@ -151,8 +175,13 @@
 				972B5F171E36E7F4007336DE /* bryan2.jpg in Resources */,
 				972B5F191E36EB53007336DE /* erin.jpg in Resources */,
 				972B5F151E36E465007336DE /* bryan.jpg in Resources */,
+				97876D741E37A7C50089906B /* alan.jpg in Resources */,
+				97876D751E37A7C50089906B /* anna.jpg in Resources */,
+				97876D771E37A7C50089906B /* michael.jpg in Resources */,
 				972B5F0D1E36E194007336DE /* LaunchScreen.storyboard in Resources */,
+				97876D781E37A7C50089906B /* shaun.jpg in Resources */,
 				972B5F0A1E36E194007336DE /* Assets.xcassets in Resources */,
+				97876D761E37A7C50089906B /* dan.jpg in Resources */,
 				972B5F1B1E37002B007336DE /* overlay.png in Resources */,
 				972B5F081E36E194007336DE /* Main.storyboard in Resources */,
 			);
@@ -279,6 +308,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 6PVXFSTZSP;
 				INFOPLIST_FILE = faceoverlay/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fingerpaint.faceoverlay;
@@ -290,6 +320,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 6PVXFSTZSP;
 				INFOPLIST_FILE = faceoverlay/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fingerpaint.faceoverlay;
@@ -316,6 +347,7 @@
 				972B5F131E36E194007336DE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
