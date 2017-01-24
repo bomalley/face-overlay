@@ -9,14 +9,15 @@
 #import "ViewController.h"
 @import CoreImage;
 @import ImageIO;
-
+@import QuartzCore;
+@import GLKit;
 
 
 
 @interface ViewController () {
-	CIDetector *faceDetector;
+	NSArray *photos;
 
-	NSURL *photoURL;
+	NSInteger photoIndex;
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *photo;
@@ -32,24 +33,42 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 
-	photoURL = [[NSBundle mainBundle] URLForResource: @"michael" withExtension: @"jpg"];
+	photos = @[[[NSBundle mainBundle] URLForResource: @"bryan" withExtension: @"jpg"],
+			   [[NSBundle mainBundle] URLForResource: @"dan" withExtension: @"jpg"],
+			   [[NSBundle mainBundle] URLForResource: @"shaun" withExtension: @"jpg"],
+			   [[NSBundle mainBundle] URLForResource: @"michael" withExtension: @"jpg"],
+			   [[NSBundle mainBundle] URLForResource: @"alan" withExtension: @"jpg"],
+			   [[NSBundle mainBundle] URLForResource: @"anna" withExtension: @"jpg"]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear: animated];
 
-	[photo setImage: [UIImage imageWithData: [NSData dataWithContentsOfURL: photoURL]]];
+	[photo setImage: [UIImage imageWithData: [NSData dataWithContentsOfURL: [photos objectAtIndex: photoIndex]]]];
+	[self setupFaceDetector];
+}
+
+- (IBAction)nextPhoto:(id)sender {
+	photoIndex++;
+
+	if (photoIndex >= [photos count]) {
+		photoIndex = 0;
+	}
+
+	[overlay setTransform: CGAffineTransformIdentity];
+
+	[photo setImage: [UIImage imageWithData: [NSData dataWithContentsOfURL: [photos objectAtIndex: photoIndex]]]];
 	[self setupFaceDetector];
 }
 
 - (void)setupFaceDetector {
 	NSDictionary *opts = @{ CIDetectorAccuracy : CIDetectorAccuracyHigh };
 
-	faceDetector = [CIDetector detectorOfType: CIDetectorTypeFace
+	CIDetector *faceDetector = [CIDetector detectorOfType: CIDetectorTypeFace
 									  context: nil
 									  options: opts];
 
-	CIImage *ciPhoto = [CIImage imageWithContentsOfURL: photoURL];
+	CIImage *ciPhoto = [CIImage imageWithContentsOfURL: [photos objectAtIndex: photoIndex]];
 
 	NSLog(@"%@", [ciPhoto properties]);
 	opts = @{ CIDetectorImageOrientation : [[ciPhoto properties] valueForKey: kCGImagePropertyOrientation] };
@@ -76,9 +95,15 @@
 	CGFloat heightRatio = uiPhotoHeight/ciPhotoHeight;
 
 
-	UIView *leftEyeAlt = [[UIView alloc] initWithFrame: CGRectMake(le.x * widthRatio, (ciPhotoHeight - le.y) * heightRatio, 5, 5)];
-	[leftEyeAlt setBackgroundColor: [UIColor whiteColor]];
-	[[self view] addSubview: leftEyeAlt];
+
+	CGRect overlayFrame = [overlay frame];
+
+	CGFloat overlayRatio = CGRectGetHeight(overlayFrame) / CGRectGetWidth(overlayFrame);
+
+	overlayFrame.size.width = fb.size.width * widthRatio;
+	overlayFrame.size.height = overlayFrame.size.width * overlayRatio;
+
+	[overlay setFrame: overlayFrame];
 
 	CGPoint faceCenter;
 
@@ -86,20 +111,16 @@
 	faceCenter.y = (([self fixY: le.y forImageHeight: ciPhotoHeight] + [self fixY: re.y forImageHeight: ciPhotoHeight] + [self fixY: mo.y forImageHeight: ciPhotoHeight]) / 3.0) * heightRatio;
 
 	[overlay setCenter: faceCenter];
-//	CGRect overlayFrame = [overlay frame];
-//
-//	CGFloat overlayRatio = CGRectGetHeight(overlayFrame) / CGRectGetWidth(overlayFrame);
-//
-//	overlayFrame.origin.x = fb.origin.x * widthRatio;
-//	overlayFrame.origin.y = fb.origin.y * heightRatio;
-//	overlayFrame.size.width = fb.size.width * widthRatio;
-//	overlayFrame.size.height = overlayFrame.size.width * overlayRatio;
-//
-//	[overlay setFrame: overlayFrame];
-//	[overlay setCenter: CGPointMake(50, 50)];
-//	[overlay setBackgroundColor: [UIColor greenColor]];
-//
-//
+
+	CGFloat faceAngleInRadians = GLKMathDegreesToRadians(ff.faceAngle);
+
+	CGAffineTransform t = [overlay transform];
+	CGAffineTransform rotateTransform = CGAffineTransformRotate(t, faceAngleInRadians);
+
+	[overlay setTransform: rotateTransform];
+
+	NSLog(@"Face Angle in Degrees %f", ff.faceAngle);
+	NSLog(@"Face Angle in Radians %f", faceAngleInRadians);
 //	NSLog(@"%@", faces);
 //	NSLog(@"%@", ff);
 }
