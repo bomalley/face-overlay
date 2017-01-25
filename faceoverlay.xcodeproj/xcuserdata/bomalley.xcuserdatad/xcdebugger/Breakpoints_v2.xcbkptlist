@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "faceoverlay/ViewController.m"
-            timestampString = "507007041.418621"
+            timestampString = "507010296.317168"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
             landmarkName = "-imagePickerControllerDidCancel:"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "faceoverlay/ViewController.m"
-            timestampString = "507007041.418621"
+            timestampString = "507009548.23833"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
-            landmarkName = "-imagePickerController:didFinishPickingMediaWithInfo:"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
+            landmarkName = "-setupFaceDetector"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

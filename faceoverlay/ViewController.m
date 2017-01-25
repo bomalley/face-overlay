@@ -111,10 +111,12 @@
 
 		[overlay setFrame: overlayFrame];
 
+		[overlay setHidden: NO];
+
 		CGPoint faceCenter;
 
-		faceCenter.x = ((le.x + re.x + mo.x) / 3.0) * widthRatio;
-		faceCenter.y = (([self fixY: le.y forImageHeight: ciPhotoHeight] + [self fixY: re.y forImageHeight: ciPhotoHeight] + [self fixY: mo.y forImageHeight: ciPhotoHeight]) / 3.0) * heightRatio;
+		faceCenter.x = (([self fixCoordinate: le.x forDimension: ciPhotoWidth] + [self fixCoordinate: re.x forDimension: ciPhotoWidth] + [self fixCoordinate: mo.x forDimension: ciPhotoWidth]) / 3.0) * widthRatio;
+		faceCenter.y = ((le.y + re.y + mo.y) / 3.0) * heightRatio;
 
 		[overlay setCenter: faceCenter];
 
@@ -128,6 +130,10 @@
 		NSLog(@"Face Angle in Degrees %f", ff.faceAngle);
 		NSLog(@"Face Angle in Radians %f", faceAngleInRadians);
 
+//		UIView *leftEye = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 25, 25)];
+//		[leftEye setBackgroundColor: [UIColor redColor]];
+//		[leftEye setCenter: CGPointMake([self fixCoordinate: le.x forDimension: ciPhotoWidth] * widthRatio, le.y * heightRatio)];
+//		[[self view] addSubview: leftEye];
 	}
 }
 
@@ -152,8 +158,8 @@
 }
 
 //*********************************
-- (CGFloat)fixY:(CGFloat)y forImageHeight:(CGFloat)height {
-	return height - y;
+- (CGFloat)fixCoordinate:(CGFloat)c forDimension:(CGFloat)d {
+	return d - c;
 }
 
 @end

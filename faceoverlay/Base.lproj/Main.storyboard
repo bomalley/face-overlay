@@ -16,8 +16,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="overlay.png" id="j64-wQ-D4J">
-                                <rect key="frame" x="0.0" y="0.0" width="205" height="288"/>
+                            <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="face-of-derm-opt-A2.png" id="j64-wQ-D4J">
+                                <rect key="frame" x="0.0" y="0.0" width="464" height="715"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="K1g-Ky-j7Z">
@@ -46,6 +46,6 @@
     </scenes>
     <resources>
         <image name="bryan.jpg" width="1280" height="960"/>
-        <image name="overlay.png" width="205" height="288"/>
+        <image name="face-of-derm-opt-A2.png" width="464" height="715"/>
     </resources>
 </document>
