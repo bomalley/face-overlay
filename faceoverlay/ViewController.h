@@ -6,9 +6,10 @@
 //  Copyright © 2017 Bryan O'Malley. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@import UIKit;
+
+@interface ViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 
 @end

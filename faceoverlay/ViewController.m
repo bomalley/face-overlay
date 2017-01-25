@@ -18,6 +18,7 @@
 	NSArray *photos;
 
 	NSInteger photoIndex;
+	UIImage *currentPhoto;
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *photo;
@@ -30,6 +31,7 @@
 @synthesize photo;
 @synthesize overlay;
 
+//*********************************
 - (void)viewDidLoad {
 	[super viewDidLoad];
 
@@ -41,26 +43,25 @@
 			   [[NSBundle mainBundle] URLForResource: @"anna" withExtension: @"jpg"]];
 }
 
+//*********************************
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear: animated];
 
-	[photo setImage: [UIImage imageWithData: [NSData dataWithContentsOfURL: [photos objectAtIndex: photoIndex]]]];
-	[self setupFaceDetector];
+	currentPhoto = [UIImage imageWithData: [NSData dataWithContentsOfURL: [photos firstObject]]];
+//	[self setupFaceDetector];
 }
 
-- (IBAction)nextPhoto:(id)sender {
-	photoIndex++;
+//*********************************
+- (IBAction)takePhoto:(UIButton *)sender {
+	UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+	[picker setDelegate: self];
+	[picker setAllowsEditing: NO];
+	[picker setSourceType: UIImagePickerControllerSourceTypeCamera];
 
-	if (photoIndex >= [photos count]) {
-		photoIndex = 0;
-	}
-
-	[overlay setTransform: CGAffineTransformIdentity];
-
-	[photo setImage: [UIImage imageWithData: [NSData dataWithContentsOfURL: [photos objectAtIndex: photoIndex]]]];
-	[self setupFaceDetector];
+	[self presentViewController: picker animated: YES completion: NULL];
 }
 
+//*********************************
 - (void)setupFaceDetector {
 	NSDictionary *opts = @{ CIDetectorAccuracy : CIDetectorAccuracyHigh };
 
@@ -68,63 +69,89 @@
 									  context: nil
 									  options: opts];
 
-	CIImage *ciPhoto = [CIImage imageWithContentsOfURL: [photos objectAtIndex: photoIndex]];
+	NSData *data = UIImageJPEGRepresentation(currentPhoto, 1.0);
+	CIImage *ciPhoto = [CIImage imageWithData: data];
 
 	NSLog(@"%@", [ciPhoto properties]);
-	opts = @{ CIDetectorImageOrientation : [[ciPhoto properties] valueForKey: kCGImagePropertyOrientation] };
 
+	if([[ciPhoto properties] valueForKey: (NSString *)kCGImagePropertyOrientation]) {
+		opts = @{ CIDetectorImageOrientation : [[ciPhoto properties] valueForKey: (NSString *)kCGImagePropertyOrientation] };
+	} else {
+		opts = @{CIDetectorImageOrientation : [NSNumber numberWithInt: 1]};
+	}
 
 	// Detect the faces
 	NSArray *faces = [faceDetector featuresInImage: ciPhoto options: opts];
 
-	CIFaceFeature *ff = [faces firstObject];
+	if ([faces count]) {
+		CIFaceFeature *ff = [faces firstObject];
 
-	CGPoint le = [ff leftEyePosition];
+		CGPoint le = [ff leftEyePosition];
 
-	CGPoint re = [ff rightEyePosition];
+		CGPoint re = [ff rightEyePosition];
 
-	CGPoint mo = [ff mouthPosition];
+		CGPoint mo = [ff mouthPosition];
 
-	CGRect fb = [ff bounds];
+		CGRect fb = [ff bounds];
 
-	CGFloat ciPhotoWidth = [[[ciPhoto properties] objectForKey: @"PixelWidth"] floatValue];
-	CGFloat ciPhotoHeight = [[[ciPhoto properties] objectForKey: @"PixelHeight"] floatValue];
-	CGFloat uiPhotoWidth = CGRectGetWidth([photo bounds]);
-	CGFloat uiPhotoHeight = CGRectGetHeight([photo bounds]);
-	CGFloat widthRatio = uiPhotoWidth/ciPhotoWidth;
-	CGFloat heightRatio = uiPhotoHeight/ciPhotoHeight;
+		CGFloat ciPhotoWidth = [[[ciPhoto properties] objectForKey: @"PixelWidth"] floatValue];
+		CGFloat ciPhotoHeight = [[[ciPhoto properties] objectForKey: @"PixelHeight"] floatValue];
+		CGFloat uiPhotoWidth = CGRectGetWidth([photo bounds]);
+		CGFloat uiPhotoHeight = CGRectGetHeight([photo bounds]);
+		CGFloat widthRatio = uiPhotoWidth/ciPhotoWidth;
+		CGFloat heightRatio = uiPhotoHeight/ciPhotoHeight;
 
 
+		CGRect overlayFrame = [overlay frame];
 
-	CGRect overlayFrame = [overlay frame];
+		CGFloat overlayRatio = CGRectGetHeight(overlayFrame) / CGRectGetWidth(overlayFrame);
 
-	CGFloat overlayRatio = CGRectGetHeight(overlayFrame) / CGRectGetWidth(overlayFrame);
+		overlayFrame.size.width = fb.size.width * widthRatio;
+		overlayFrame.size.height = overlayFrame.size.width * overlayRatio;
 
-	overlayFrame.size.width = fb.size.width * widthRatio;
-	overlayFrame.size.height = overlayFrame.size.width * overlayRatio;
+		[overlay setFrame: overlayFrame];
 
-	[overlay setFrame: overlayFrame];
+		CGPoint faceCenter;
 
-	CGPoint faceCenter;
+		faceCenter.x = ((le.x + re.x + mo.x) / 3.0) * widthRatio;
+		faceCenter.y = (([self fixY: le.y forImageHeight: ciPhotoHeight] + [self fixY: re.y forImageHeight: ciPhotoHeight] + [self fixY: mo.y forImageHeight: ciPhotoHeight]) / 3.0) * heightRatio;
 
-	faceCenter.x = ((le.x + re.x + mo.x) / 3.0) * widthRatio;
-	faceCenter.y = (([self fixY: le.y forImageHeight: ciPhotoHeight] + [self fixY: re.y forImageHeight: ciPhotoHeight] + [self fixY: mo.y forImageHeight: ciPhotoHeight]) / 3.0) * heightRatio;
+		[overlay setCenter: faceCenter];
 
-	[overlay setCenter: faceCenter];
+		CGFloat faceAngleInRadians = GLKMathDegreesToRadians(ff.faceAngle);
 
-	CGFloat faceAngleInRadians = GLKMathDegreesToRadians(ff.faceAngle);
+		CGAffineTransform t = [overlay transform];
+		CGAffineTransform rotateTransform = CGAffineTransformRotate(t, faceAngleInRadians);
 
-	CGAffineTransform t = [overlay transform];
-	CGAffineTransform rotateTransform = CGAffineTransformRotate(t, faceAngleInRadians);
+		[overlay setTransform: rotateTransform];
 
-	[overlay setTransform: rotateTransform];
+		NSLog(@"Face Angle in Degrees %f", ff.faceAngle);
+		NSLog(@"Face Angle in Radians %f", faceAngleInRadians);
 
-	NSLog(@"Face Angle in Degrees %f", ff.faceAngle);
-	NSLog(@"Face Angle in Radians %f", faceAngleInRadians);
-//	NSLog(@"%@", faces);
-//	NSLog(@"%@", ff);
+	}
 }
 
+//*********************************
+# pragma mark Image Picker Delegate
+//*********************************
+
+
+//*********************************
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+
+	currentPhoto = info[UIImagePickerControllerOriginalImage];
+
+	[photo setImage: currentPhoto];
+	[self setupFaceDetector];
+	[picker dismissViewControllerAnimated: YES completion: NULL];
+}
+
+//*********************************
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+	[picker dismissViewControllerAnimated: YES completion: NULL];
+}
+
+//*********************************
 - (CGFloat)fixY:(CGFloat)y forImageHeight:(CGFloat)height {
 	return height - y;
 }
