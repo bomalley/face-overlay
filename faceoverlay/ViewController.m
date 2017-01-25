@@ -13,6 +13,9 @@
 @import GLKit;
 
 
+#define OVERLAY_RATIO	0.75
+#define OVERLAY_FRAME	CGRectMake(-512, -384, 2048, 1536)
+
 
 @interface ViewController () {
 	NSArray *photos;
@@ -23,6 +26,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *photo;
 @property (weak, nonatomic) IBOutlet UIImageView *overlay;
+@property (weak, nonatomic) IBOutlet UIImageView *blackout;
 
 @end
 
@@ -30,6 +34,7 @@
 
 @synthesize photo;
 @synthesize overlay;
+@synthesize blackout;
 
 //*********************************
 - (void)viewDidLoad {
@@ -101,13 +106,15 @@
 		CGFloat widthRatio = uiPhotoWidth/ciPhotoWidth;
 		CGFloat heightRatio = uiPhotoHeight/ciPhotoHeight;
 
+		CGFloat overlayFaceHeight = 650;
+		CGFloat overlayFaceWidth = 500;
+
+
 
 		CGRect overlayFrame = [overlay frame];
 
-		CGFloat overlayRatio = CGRectGetHeight(overlayFrame) / CGRectGetWidth(overlayFrame);
-
-		overlayFrame.size.width = fb.size.width * widthRatio;
-		overlayFrame.size.height = overlayFrame.size.width * overlayRatio;
+		overlayFrame.size.width = CGRectGetWidth(overlayFrame) * ((fb.size.width * widthRatio) / overlayFaceWidth);
+		overlayFrame.size.height = overlayFrame.size.width * OVERLAY_RATIO;
 
 		[overlay setFrame: overlayFrame];
 
@@ -119,6 +126,7 @@
 		faceCenter.y = ((le.y + re.y + mo.y) / 3.0) * heightRatio;
 
 		[overlay setCenter: faceCenter];
+//		[blackout setCenter: faceCenter];
 
 		CGFloat faceAngleInRadians = GLKMathDegreesToRadians(ff.faceAngle);
 
@@ -145,6 +153,8 @@
 //*********************************
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
 
+	[self resetOverlay];
+
 	currentPhoto = info[UIImagePickerControllerOriginalImage];
 
 	[photo setImage: currentPhoto];
@@ -160,6 +170,12 @@
 //*********************************
 - (CGFloat)fixCoordinate:(CGFloat)c forDimension:(CGFloat)d {
 	return d - c;
+}
+
+//*********************************
+- (void)resetOverlay {
+	[overlay setTransform: CGAffineTransformIdentity];
+	[overlay setFrame: OVERLAY_FRAME];
 }
 
 @end

@@ -16,8 +16,12 @@
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="face-of-derm-opt-A2.png" id="j64-wQ-D4J">
-                                <rect key="frame" x="0.0" y="0.0" width="464" height="715"/>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="black.png" id="Qab-6F-mdR">
+                                <rect key="frame" x="-512" y="-384" width="2048" height="1536"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="face-of-derm-opt-B2.png" id="j64-wQ-D4J">
+                                <rect key="frame" x="-512" y="-384" width="2048" height="1536"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="K1g-Ky-j7Z">
@@ -35,6 +39,7 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
+                        <outlet property="blackout" destination="Qab-6F-mdR" id="lKt-TQ-HeW"/>
                         <outlet property="overlay" destination="j64-wQ-D4J" id="X6x-uf-fD6"/>
                         <outlet property="photo" destination="J2y-bW-mX0" id="Ajj-Q4-DQW"/>
                     </connections>
@@ -45,7 +50,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="black.png" width="2048" height="1536"/>
         <image name="bryan.jpg" width="1280" height="960"/>
-        <image name="face-of-derm-opt-A2.png" width="464" height="715"/>
+        <image name="face-of-derm-opt-B2.png" width="2048" height="1536"/>
     </resources>
 </document>
