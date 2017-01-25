@@ -18,9 +18,7 @@
 
 
 @interface ViewController () {
-	NSArray *photos;
 
-	NSInteger photoIndex;
 	UIImage *currentPhoto;
 }
 
@@ -34,25 +32,6 @@
 @synthesize photo;
 @synthesize overlay;
 
-//*********************************
-- (void)viewDidLoad {
-	[super viewDidLoad];
-
-	photos = @[[[NSBundle mainBundle] URLForResource: @"bryan" withExtension: @"jpg"],
-			   [[NSBundle mainBundle] URLForResource: @"dan" withExtension: @"jpg"],
-			   [[NSBundle mainBundle] URLForResource: @"shaun" withExtension: @"jpg"],
-			   [[NSBundle mainBundle] URLForResource: @"michael" withExtension: @"jpg"],
-			   [[NSBundle mainBundle] URLForResource: @"alan" withExtension: @"jpg"],
-			   [[NSBundle mainBundle] URLForResource: @"anna" withExtension: @"jpg"]];
-}
-
-//*********************************
-- (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear: animated];
-
-	currentPhoto = [UIImage imageWithData: [NSData dataWithContentsOfURL: [photos firstObject]]];
-//	[self setupFaceDetector];
-}
 
 //*********************************
 - (IBAction)takePhoto:(UIButton *)sender {
@@ -105,7 +84,7 @@
 		CGFloat heightRatio = uiPhotoHeight/ciPhotoHeight;
 
 		CGFloat overlayFaceHeight = 536;
-		CGFloat overlayFaceWidth = 446;
+		CGFloat overlayFaceWidth = 540;
 
 
 
@@ -139,6 +118,8 @@
 //		[leftEye setBackgroundColor: [UIColor redColor]];
 //		[leftEye setCenter: CGPointMake([self fixCoordinate: le.x forDimension: ciPhotoWidth] * widthRatio, le.y * heightRatio)];
 //		[[self view] addSubview: leftEye];
+	} else {
+		NSLog(@"No face detected");
 	}
 }
 

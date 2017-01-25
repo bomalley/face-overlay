@@ -22,6 +22,7 @@
 		973094D31E3909B9003B166D /* face-of-derm-alt.png in Resources */ = {isa = PBXBuildFile; fileRef = 973094D11E3909B9003B166D /* face-of-derm-alt.png */; };
 		973094D41E3909B9003B166D /* face-of-derm.png in Resources */ = {isa = PBXBuildFile; fileRef = 973094D21E3909B9003B166D /* face-of-derm.png */; };
 		975446E11E38F2EB00583C93 /* text-overlay-horizontal.png in Resources */ = {isa = PBXBuildFile; fileRef = 975446E01E38F2EB00583C93 /* text-overlay-horizontal.png */; };
+		9771A1761E3919CE00436B23 /* face-of-derm-transp-black.png in Resources */ = {isa = PBXBuildFile; fileRef = 9771A1751E3919CE00436B23 /* face-of-derm-transp-black.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		973094D11E3909B9003B166D /* face-of-derm-alt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "face-of-derm-alt.png"; sourceTree = "<group>"; };
 		973094D21E3909B9003B166D /* face-of-derm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "face-of-derm.png"; sourceTree = "<group>"; };
 		975446E01E38F2EB00583C93 /* text-overlay-horizontal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "text-overlay-horizontal.png"; sourceTree = "<group>"; };
+		9771A1751E3919CE00436B23 /* face-of-derm-transp-black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "face-of-derm-transp-black.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 		972B5EFC1E36E194007336DE /* faceoverlay */ = {
 			isa = PBXGroup;
 			children = (
+				9771A1751E3919CE00436B23 /* face-of-derm-transp-black.png */,
 				973094D11E3909B9003B166D /* face-of-derm-alt.png */,
 				973094D21E3909B9003B166D /* face-of-derm.png */,
 				975446E01E38F2EB00583C93 /* text-overlay-horizontal.png */,
@@ -172,6 +175,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9771A1761E3919CE00436B23 /* face-of-derm-transp-black.png in Resources */,
 				9700D6401E38549C00C9D86E /* face-of-derm-opt-A2.png in Resources */,
 				9700D6441E38632400C9D86E /* face-of-derm-opt-B2.png in Resources */,
 				972B5F0D1E36E194007336DE /* LaunchScreen.storyboard in Resources */,
